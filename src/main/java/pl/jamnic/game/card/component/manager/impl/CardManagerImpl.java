@@ -6,7 +6,7 @@ import pl.jamnic.game.card.component.manager.CardManager;
 import pl.jamnic.game.card.model.Card;
 
 @Component
-public final class CardManagerImpl implements CardManager {
+public class CardManagerImpl implements CardManager {
 
 	@Override
 	public String getCardInfo(Card card) {

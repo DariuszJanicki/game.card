@@ -15,7 +15,7 @@ import pl.jamnic.game.card.model.Deck;
 import com.google.common.collect.Lists;
 
 @Component
-public final class DeckManagerImpl implements DeckManager {
+public class DeckManagerImpl implements DeckManager {
 
 	@Autowired
 	private CardManager cardManager;

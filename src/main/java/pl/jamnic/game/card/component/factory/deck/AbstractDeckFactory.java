@@ -10,7 +10,16 @@ import pl.jamnic.game.card.model.type.CardSuit;
 
 import com.google.common.collect.Lists;
 
-public abstract class AbstractDeckFactory {
+public abstract class AbstractDeckFactory implements DeckFactory {
+
+	@Override
+	public Deck createNew() {
+		List<Card> cards = Lists.newLinkedList();
+
+		pickCardNumber(cards);
+
+		return new Deck(cards);
+	}
 
 	protected void pickCardNumber(List<Card> cards) {
 		for (CardNumber cardNumber : getCardNumbers()) {

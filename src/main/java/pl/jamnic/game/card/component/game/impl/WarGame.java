@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import pl.jamnic.game.card.component.factory.DeckFactory;
@@ -16,9 +17,10 @@ import pl.jamnic.game.card.model.Player;
 import com.google.common.collect.Lists;
 
 @Component
-public final class WarGame implements Game {
+public class WarGame implements Game {
 
 	@Autowired
+	@Qualifier("smallDeckFactoryImpl")
 	private DeckFactory deckFactory;
 
 	@Autowired
@@ -28,6 +30,7 @@ public final class WarGame implements Game {
 
 	@Override
 	public void initializeGame(Player firstPlayer, Player secondPlayer) {
+		deckManager.toString();
 		Deck warDeck = deckFactory.createNew();
 
 		deckManager.shuffleDeck(warDeck, 10);
@@ -43,19 +46,22 @@ public final class WarGame implements Game {
 		List<Card> firstCards = firstDeck.getCards();
 		List<Card> secondCards = secondDeck.getCards();
 
-		return roundConditionsPassed(firstCards, secondCards) ? compareCards(firstDeck, secondDeck,
-				Lists.newLinkedList()) : false;
+		return roundConditionsPassed(firstCards, secondCards) ? compareCards(
+				firstDeck, secondDeck, Lists.newLinkedList()) : false;
 	}
 
-	private boolean roundConditionsPassed(List<Card> firstCards, List<Card> secondCards) {
+	private boolean roundConditionsPassed(List<Card> firstCards,
+			List<Card> secondCards) {
 		boolean firstPlayerHasCardsToPlay = !firstCards.isEmpty();
 		boolean secondPlayerHasCardsToPlay = !secondCards.isEmpty();
 		boolean roundLimitIsNotAchievedYet = ++round < 1000;
 
-		return roundLimitIsNotAchievedYet && firstPlayerHasCardsToPlay && secondPlayerHasCardsToPlay;
+		return roundLimitIsNotAchievedYet && firstPlayerHasCardsToPlay
+				&& secondPlayerHasCardsToPlay;
 	}
 
-	private boolean compareCards(Deck firstDeck, Deck secondDeck, List<Card> winnersCards) {
+	private boolean compareCards(Deck firstDeck, Deck secondDeck,
+			List<Card> winnersCards) {
 		Card firstCard = deckManager.drawCard(firstDeck);
 		Card secondCard = deckManager.drawCard(secondDeck);
 
@@ -75,7 +81,8 @@ public final class WarGame implements Game {
 		return true;
 	}
 
-	private boolean performWar(Deck firstDeck, Deck secondDeck, List<Card> winnersCards) {
+	private boolean performWar(Deck firstDeck, Deck secondDeck,
+			List<Card> winnersCards) {
 		if (firstDeck.getCards().size() < 2) {
 			deckManager.addCards(secondDeck, winnersCards);
 		} else if (secondDeck.getCards().size() < 2) {

@@ -11,7 +11,7 @@ import pl.jamnic.game.card.model.Deck;
 import pl.jamnic.game.card.model.Player;
 
 @Component
-public final class PlayerManagerImpl implements PlayerManager {
+public class PlayerManagerImpl implements PlayerManager {
 
 	@Autowired
 	private DeckManager deckManager;

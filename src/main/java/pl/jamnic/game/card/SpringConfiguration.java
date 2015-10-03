@@ -6,5 +6,4 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ComponentScan("pl.jamnic.game.card.component")
 public class SpringConfiguration {
-
 }
